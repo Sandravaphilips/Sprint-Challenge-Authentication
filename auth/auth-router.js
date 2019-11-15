@@ -25,7 +25,7 @@ router.post('/login', (req, res) => {
 
   Users.findBy({username})
     .then(([user]) => {
-      if(user && bcrypt.compareSync(user.password, password)) {
+      if(user && bcrypt.compareSync(password, user.password)) {
         const token = generateToken(user);
         res.status(201).json({message: `Welcome ${user.username}`, payload: token});
       }      
