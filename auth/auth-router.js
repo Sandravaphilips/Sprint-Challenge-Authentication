@@ -27,11 +27,13 @@ router.post('/login', (req, res) => {
     .then(([user]) => {
       if(user && bcrypt.compareSync(password, user.password)) {
         const token = generateToken(user);
-        res.status(201).json({message: `Welcome ${user.username}`, payload: token});
-      }      
+        res.status(200).json({message: `Welcome ${user.username}`, payload: token});
+      }  else {
+        res.json({message: 'Please enter your credentials and try again'})
+      }    
     })
     .catch(err => {
-      res.status(500).json(err);
+      res.status(404).json({message: 'user not found'});
     })
 });
 
